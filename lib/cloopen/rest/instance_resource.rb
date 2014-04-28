@@ -17,14 +17,8 @@ module Cloopen
       protected
 
       def set_up_properties_from(hash)
-        hash.each do |p,v|
-          property = decloopfy p
-          response_body = prase_body v
-          unless ['uri', 'client'].include? property
-            instance_variable_set "@#{property}", Cloopen::REST::Response.new(response_body)
-          end
-          self.class.instance_eval {attr_reader property}
-        end
+        instance_variable_set "@response", Cloopen::REST::Response.new(hash)
+        self.class.instance_eval {attr_reader :response}
       end
 
       def resource(*resources)

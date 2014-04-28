@@ -6,7 +6,7 @@ module Cloopen
       attr_reader :status, :status_code, :body
       def initialize(body)
         @body = body
-        @status_code = @body.delete(:status_code)
+        @status_code = @body.delete('statusCode')
         @status = status_code_descritptions[@status_code]
       end
 

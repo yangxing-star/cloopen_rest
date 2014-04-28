@@ -3,11 +3,11 @@ module Cloopen
     class Client
       include Utils
 
-      API_VERSION = '2013-03-22'
+      API_VERSION = '2013-12-26'
 
       HTTP_HEADERS = {
-        'Accept' => 'application/xml',
-        'Content-Type' => 'application/xml;charset=utf-8'
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json;charset=utf-8'
       }
 
       PRODUCTION_HOST = 'https://app.cloopen.com'
@@ -34,12 +34,19 @@ module Cloopen
                      when :get
                        RestClient.get(uri, @headers)
                      when :post
-                       payload = build_body args[0], resource
-                       RestClient.post(uri, payload, @headers)
+                       RestClient.post(uri, args[0].to_json, @headers)
                      else
                      end
-          MultiXml.parse response
+          JSON.parse response
         end
+      end
+      
+      def sub_account(sub_account_sid, sub_account_password)
+        timestamp = Time.now.strftime('%Y%m%d%H%M%S')
+        @signature = Digest::MD5.hexdigest("#{sub_account_sid}#{sub_account_password}#{timestamp}").upcase
+        authorization = Base64.strict_encode64("#{sub_account_sid}:#{timestamp}").strip
+        @headers = HTTP_HEADERS.merge! 'Authorization' => authorization
+        Cloopen::REST::SubAccount.new "/#{API_VERSION}/SubAccounts/#{sub_account_sid}/Calls", self
       end
 
       private
