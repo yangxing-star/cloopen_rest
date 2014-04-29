@@ -22,5 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 0'
   spec.add_dependency 'rest-client', '~> 0'
   spec.add_dependency 'json', '~> 1.8'
+  spec.add_dependency 'multi_xml', '~> 0.5', '>= 0.5.2'
   spec.add_dependency 'builder', '~> 3.1.0'
 end

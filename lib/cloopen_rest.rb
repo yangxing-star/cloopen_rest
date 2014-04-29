@@ -1,3 +1,4 @@
+require 'multi_xml'
 require 'json'
 require 'rest_client'
 require 'builder'
@@ -19,6 +20,7 @@ require 'cloopen/rest/sms/messages'
 require 'cloopen/rest/sms'
 require 'cloopen/rest/call/landing_calls'
 require 'cloopen/rest/call/callback'
+require 'cloopen/rest/call/voice_verify'
 require 'cloopen/rest/calls'
 require 'cloopen/rest/client'
 
